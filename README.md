@@ -1,7 +1,7 @@
 ## Deep Reinforcement Collaboration and Competition (Udacity)
 ## Project 3: Collaboration and Competition
 
-<img src="images/reacher.png" align="top-left" alt="" title="Plot" />
+<img src="images/collaboration.png" align="top-left" alt="" title="Plot" />
 
 For this project, I worked with the [Tennis](https://github.com/Unity-Technologies/ml-agents/blob/master/docs/Learning-Environment-Examples.md#tennis) environment and trained it using a Multi-Agent RL model with continuous controls and actions.
 
