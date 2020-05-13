@@ -8,7 +8,20 @@ It took many iterations of tweaking hyperparams and rerunning the model. The res
 ## Network Architecture
 I didn't change much from the basic implementation in terms of number layers. The network architecture is made up of two fully connected hidden layers with 256 units and ReLu action function for both actors and critics. In order to help speed up learning and avoid getting stuck in a local minimum, batch normalization was used for each hidden layer for both actor and critic networks. Tanh activation function was used on the output layer for the actor-network as it ensures that every entry in the action vector is a number between -1 and 1. Adam optimizer was used for both actor and critic networks.
 
-## Plot of Rewards
+## Hyperparameters
+- Buffer Size = 10000
+- Batch Size = 64
+- Noise Start = 0.5
+- Noise Decay = 1.0
+- Update Interval = 2
+- Gamma/Discount Factor = .9999
+- tau = 1e-3
+- learning rate (actor) = 1e-4
+- learning rate (critic) = 3e-4
 
+## Plot of Rewards
+<img src="images/collaboration_competition.png" align="top-left" alt="" title="Plot" />
 
 ## Ideas for Future Work
+- Experiment with incorporating prioritized replay. It should help further reduce the correlations so that there is less bias in the agent's training while it learns the optimal policy.
+- Experiment using Multi-Agent Proximal Policy Optimization (MAPPO) to see how it compares to MADDPG.
