@@ -20,7 +20,7 @@ I didn't change much from the basic implementation in terms of number layers. Th
 - learning rate (critic) = 3e-4
 
 ## Plot of Rewards
-<img src="images/collaboration_competition.png" align="top-left" alt="" title="Plot" />
+<img src="images/collaboration.png" align="top-left" alt="" title="Plot" />
 
 ## Ideas for Future Work
 - Experiment with incorporating prioritized replay. It should help further reduce the correlations so that there is less bias in the agent's training while it learns the optimal policy.
