@@ -9,17 +9,36 @@ It took many iterations of tweaking hyperparams and rerunning the model. The res
 To model more real-world scenario, we need multi-agent systems which learn to perform complex tasks while simultaneously collaborating and/or competing with other agents. The more complex the task, more likely that multi-agents are needed. One of the advantages of a multi-agent approach is this additional factor of learning via cooperation or competition. Instead of one agent trying to master several tasks, the tasks can be divided among multiple agents and one can agent can utilize the knowledge acquired by the other. This ensures solving much more complex tasks modeling real-world situations such as simulating a self-driving car or in our case playing tennis.
 
 
-### Some approaches
-
+### Approaches
+Individually every agent in this model is modeled as a Deep Deterministic Policy Gradient agent but some information is shared between the agents. For example, earch of the agents in this model has its own actor and critic model. The actors receieve as input the individual state (observations) of the agent and output a two dimensional action. The critic model of each actor, however, receives the states and actions of all actors concatenated. This should facilitate the information sharing between the agents. During training, the agents use a common experience replay buffer and draw independent samples.
 
 ### Noise
-
+I used noise to allow the agents to explore new possibilities during training. Started with an initial amount and keep it constant until a certain number of overall time steps, in my case 4000.
 
 ### Hyperparameters why
+- Buffer Size = 10000 (Trial and error. Started with 100k)
+- Batch Size = 64 (Trial and error. Started with 256. Performance was getting worse with higher numbers and so I started lowering and this seems to work best for me)
+- Noise Start = 0.5 (Trial and error. Didn't experiment much with it)
+- Noise Decay = 1.0 (Trial and error. Didn't experiment much with it)
+- Update Interval = 2 (Trial and error. Started with 4 and lowered to 2. This seems to work)
+- Gamma/Discount Factor = .9999 (Most of the Udacity's examples use a fraction close to 1 for the discount factor and it was recommended several time early on and I stuck to it)
+- tau = 1e-3 (Didn't play with this at all. A relatively low value since target networks are updated after each step)
+- learning rate (actor) = 1e-4 (Trial and error)
+- learning rate (critic) = 3e-4 (Trial and error)
 
 
 ### Model architecture for Actor/Critic
+I reused the code from the last project which I started with Udacity's example code on DDPG. I experimented very little with the number of hidden layers and neurons as my training was taking too long and the average score was not improving. The architecture for Actor Critic uses 2 fully connected hidden layers with ReLu activation function for both Actor and Critic. Based on some recommendations from other studends, I also used batch normalization in both Actor and Critic
 
+- Actor
+  - Hidden: (input, 256) - ReLU
+  - Hidden: (256, 256) - ReLU
+  - Output: (256, 4) - TanH
+
+- Critic
+  - Hidden: (input, 256) - ReLU
+  - Hidden: (256, 256) - ReLU
+  - Output: (256, 1) - Linear
 
 ## Network Architecture
 I didn't change much from the basic implementation in terms of number layers. The network architecture is made up of two fully connected hidden layers with 256 units and ReLu action function for both actors and critics. In order to help speed up learning and avoid getting stuck in a local minimum, batch normalization was used for each hidden layer for both actor and critic networks. Tanh activation function was used on the output layer for the actor-network as it ensures that every entry in the action vector is a number between -1 and 1. Adam optimizer was used for both actor and critic networks.
